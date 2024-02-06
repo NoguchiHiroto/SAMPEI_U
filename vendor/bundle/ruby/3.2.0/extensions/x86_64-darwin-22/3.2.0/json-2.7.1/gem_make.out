@@ -1,0 +1,16 @@
+current directory: /Users/noguchi.hiroto/Documents/SAMPEI_U/vendor/bundle/ruby/3.2.0/gems/json-2.7.1/ext/json
+/Users/noguchi.hiroto/.rbenv/versions/3.2.2/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /Users/noguchi.hiroto/Documents/SAMPEI_U/vendor/bundle/ruby/3.2.0/gems/json-2.7.1/ext/json
+make DESTDIR\= sitearchdir\=./.gem.20240204-51002-oytn0z sitelibdir\=./.gem.20240204-51002-oytn0z clean
+
+current directory: /Users/noguchi.hiroto/Documents/SAMPEI_U/vendor/bundle/ruby/3.2.0/gems/json-2.7.1/ext/json
+make DESTDIR\= sitearchdir\=./.gem.20240204-51002-oytn0z sitelibdir\=./.gem.20240204-51002-oytn0z
+make: Nothing to be done for `all'.
+
+current directory: /Users/noguchi.hiroto/Documents/SAMPEI_U/vendor/bundle/ruby/3.2.0/gems/json-2.7.1/ext/json
+make DESTDIR\= sitearchdir\=./.gem.20240204-51002-oytn0z sitelibdir\=./.gem.20240204-51002-oytn0z install
+
+current directory: /Users/noguchi.hiroto/Documents/SAMPEI_U/vendor/bundle/ruby/3.2.0/gems/json-2.7.1/ext/json
+make DESTDIR\= sitearchdir\=./.gem.20240204-51002-oytn0z sitelibdir\=./.gem.20240204-51002-oytn0z clean
