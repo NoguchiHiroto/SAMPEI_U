@@ -41,7 +41,9 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-
+ios/
+android/
+__tests__/
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
