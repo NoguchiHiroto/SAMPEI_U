@@ -1,0 +1,6 @@
+module Pods_SAMPEI_U {
+  umbrella header "Pods-SAMPEI_U-umbrella.h"
+
+  export *
+  module * { export * }
+}
