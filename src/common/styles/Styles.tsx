@@ -7,6 +7,8 @@ import { StyleSheetProperties } from 'react-native';
 
 export interface Styles {
   container: ViewStyle;
+  inputState? : ViewStyle;
+  todayTemp? : ViewStyle;
   text: TextStyle;
 }
 

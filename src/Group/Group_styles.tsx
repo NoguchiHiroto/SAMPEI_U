@@ -7,9 +7,12 @@ import { Styles } from '../common/styles/Styles';
 
 const GroupStyles = StyleSheet.create<Styles>({
   container: {
+    flexDirection: 'row',
+    
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    // alignItems: 'center',
+    // justifyContent: 'center',
     backgroundColor: '#ffffff',
   },
   text: {

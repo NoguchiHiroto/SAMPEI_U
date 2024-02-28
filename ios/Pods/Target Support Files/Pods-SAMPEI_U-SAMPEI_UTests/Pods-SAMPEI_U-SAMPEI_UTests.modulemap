@@ -1,6 +1,0 @@
-module Pods_SAMPEI_U_SAMPEI_UTests {
-  umbrella header "Pods-SAMPEI_U-SAMPEI_UTests-umbrella.h"
-
-  export *
-  module * { export * }
-}

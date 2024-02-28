@@ -12,14 +12,14 @@ const SelectIsSymptoms = () => {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.container.ttlText}>本日の症状</Text>
+        <Text style={styles.ttlText}>本日の症状</Text>
       </View>
       <View style={styles.buttonWrapper}>
         <TouchableOpacity style={isSymptom === true ? styles.selectedButton : styles.button} onPress={() => dispatch(changeIsSymptoms(true))}>
-          <Text style={isSymptom === true ? styles.selectedButton.Text : styles.button.Text}>あり</Text>
+          <Text style={isSymptom === true ? styles.Text__white : styles.Text__black}>あり</Text>
         </TouchableOpacity>
         <TouchableOpacity style={isSymptom === false ? styles.selectedButton : styles.button} onPress={() => dispatch(changeIsSymptoms(false))}>
-          <Text style={isSymptom === false ? styles.selectedButton.Text : styles.button.Text}>なし</Text>
+          <Text style={isSymptom === false ? styles.Text__white : styles.Text__black}>なし</Text>
         </TouchableOpacity>
       </View>
     </View>
