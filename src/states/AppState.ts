@@ -4,4 +4,5 @@ export interface AppState {
   isSymptoms: boolean;
   symptoms: string[][];
   comment: string;
+  profileImg: any;
 }

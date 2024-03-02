@@ -6,6 +6,7 @@ import styles from './styles';
 import { TouchableHighlight, GestureHandlerRootView } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
+import { getMoment } from '../../../../common/getMoment';
 interface Body extends FormData {
   comment: string;
   year: number;
@@ -21,18 +22,13 @@ export const SendButton = () => {
   const comment =  useSelector((state) => state.temp.comment);
   const sendData = () => {
     const body = new FormData();
-    const now = moment();
-    const year = now.year();
-    const month = now.month() + 1;
-    const date = now.date();
-    const hour = now.hour();
-    const minute = now.minute();
+    const now = getMoment();
     body.append('comment', comment);
-    body.append('year', year);
-    body.append('month', month);
-    body.append('date', date);
-    body.append('hour', hour);
-    body.append('minute', minute);
+    body.append('year', now.year);
+    body.append('month', now.month);
+    body.append('date', now.date);
+    body.append('hour', now.hour);
+    body.append('minute', now.minute);
     body.append('userName', userName);
     body.append('userID', 12345);
     console.log('body:',body);

@@ -2,14 +2,36 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const app = express()
 const api = require('./firebase/index');
+const getRawBody = require('raw-body');
 
 // app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json());
+// JSONリクエストのサイズ制限を変更
+app.use(bodyParser.json({ limit: '100mb' }));
+
+// URLエンコードされたリクエストのサイズ制限を変更
+app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 // static built-in middleware
 // app.use(express.static('public'))
+// app.use((req, res, next) => {
+//   // console.log('body', req.body)
+//   // console.log('headers', req.headers);
+//   getRawBody(req, {
+//     length: req.headers['content-length'],
+//     limit: '100mb',
+//   }, (err, string) => {
+//     if (err) return next(err);
+//     req.text = string;
+//     console.log('ERR')
+//     next();
+
+//   });
+//   next();
+//   // console.log('getRawBody!!!')
+// });
 
 // body-parser
 const createBodyObj = (body) => {
+  console.log('create', body)
   const bodyObj = {};
   body.forEach(elm => {
     bodyObj[elm[0]] = elm[1];
@@ -17,12 +39,16 @@ const createBodyObj = (body) => {
   return bodyObj;
 }
 app.get('/api/getData', (req, res, next) => {
-    addData.addData().then(() => {
-      addData.getData().then((data) => {
-      res.json(data);
-    });
-  })
-})
+  api.getData().then((data) => {
+    // console.log(data);
+    res.json(data);
+  });
+});
+app.post('/api/setProfileImg', (req, res, next) => {
+  console.log('BODY');
+  const body = createBodyObj(req.body._parts);
+  api.setProfileImg(body)
+});
 
 app.post('/api/setData', (req, res, next) => {
   const body = createBodyObj(req.body._parts);

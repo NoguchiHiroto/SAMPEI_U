@@ -8,7 +8,7 @@ import { Styles } from '../common/styles/Styles';
 const GroupStyles = StyleSheet.create<Styles>({
   container: {
     flexDirection: 'row',
-    
+    width: '100%',
     flex: 1,
     justifyContent: 'space-between',
     // alignItems: 'center',

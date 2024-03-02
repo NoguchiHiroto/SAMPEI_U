@@ -25,21 +25,54 @@ module.exports = {
       }).then(() => resolve());
     })
   },
-  getData: () => {
-    const refAll = db.collection('comment');
+  getData: (date='2023-12-24') => {
+    const refAll = db.collection('comment').doc('Noguchi').collection(date);
     return new Promise((resolve, reject) => {
       refAll.get().then((snapshot) => {
-        if(snapshot.empty) {
+        if (snapshot.empty) {
+          // もしもコメントがなかった場合
           console.log('Empty');
-          resolve({})
+          resolve({});
         } else {
+          // コメントがあればその日のコメントを全て取得
           const result = {}
           snapshot.forEach(doc => {
             result[doc.id] = doc.data();
           });
           resolve(result);
         }
+      }).catch((err) => {
+        reject({});
+        throw new Error(err);
       })
     })
- }
+  },
+  setProfileImg: (data) => {
+    // console.log(data);
+    const docRef = db.collection('users').doc(`${data.userName}`);
+    console.log(docRef);
+    // const docRef = db.collection('users').doc('user1');
+    return new Promise((resolve, reject) => {
+      // docRef.get().then((snapshot) => {
+      //   if (snapshot.empty) {
+      //     console.log('EMPTY');
+      //   } else {
+      //     // snapshot.forEach(doc => {
+      //     //   conosle.log(doc.data())
+      //     // });
+      //     console.log(snapshot.data())
+      //     console.log('OK')
+      //     resolve('OK');
+      //   }
+      // }).catch((err) => {
+      //   reject();
+      //   throw new Error(err);
+      // })
+
+      docRef.set({
+        img: data.img,
+        userName: 'aaaa',
+      }).then(() => resolve());
+    })
+  }
 } 
