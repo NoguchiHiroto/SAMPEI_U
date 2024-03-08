@@ -4,13 +4,13 @@ import { useSelector } from './../../store/store';
 import { Text, View, Button, TouchableOpacity, Image, Alert } from 'react-native';
 // import Icon from 'react-native-vector-icons/MaterialIcons'; // お好きなアイコンライブラリを選択
 import ProfileIconImage from './../ProfileIcon.png';
-import { launchImageLibrary } from 'react-native-image-picker';
+import { MediaType, launchImageLibrary } from 'react-native-image-picker';
 import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
 const fs = require('fs');
 const path = require('path');
 
-const encodeImageToBase64 = (imageUri) => {
+const encodeImageToBase64 = (imageUri:string) => {
   return new Promise((resolve, reject) => {
     // iphone内のPathを引数にして画像を取得する
     // console.log(imageUri);
@@ -30,7 +30,7 @@ const encodeImageToBase64 = (imageUri) => {
   }) 
 }
 
-const uploadImageToDatabase = (imageUri) => {
+const uploadImageToDatabase = (imageUri:string) => {
   return new Promise((resolve, reject) => {
     try {
       // console.log(imageUri);
@@ -50,19 +50,19 @@ const uploadImageToDatabase = (imageUri) => {
       }).then((response) => {
         response.json().then((data) => {
           console.log('画像アップロードOK!', data)
-        })
+        });
       }).catch(err => {
         console.error(err);
       })
     } catch(error) {
       console.error('ダメです！画像がアップロードできません！', error);
     }
-  })
+  });
 }
 
 const ProfileIcon = ({ onPress }: any) => {
   const userName = useSelector((state) => state.temp.userName);
-  const [imageUri, setImageUri] = useState(null);
+  const [imageUri, setImageUri] = useState<string>('');
   const selectImage = () => {
     const options = {
       title: 'Select Image',
@@ -70,6 +70,7 @@ const ProfileIcon = ({ onPress }: any) => {
         skipBackup: true,
         path: 'images',
       },
+      mediaType: 'photo' as MediaType
     };
     launchImageLibrary(options, (response: any) => {
       if (response.didCancel) {
@@ -99,6 +100,7 @@ const ProfileIcon = ({ onPress }: any) => {
           });
         })
       }
+      
     });
   };
   return (
