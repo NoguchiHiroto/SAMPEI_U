@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 
 // body-parser
 const createBodyObj = (body) => {
-  console.log('create', body)
+  // console.log('create', body)
   const bodyObj = {};
   body.forEach(elm => {
     bodyObj[elm[0]] = elm[1];
@@ -47,7 +47,9 @@ app.get('/api/getData', (req, res, next) => {
 app.post('/api/setProfileImg', (req, res, next) => {
   console.log('BODY');
   const body = createBodyObj(req.body._parts);
-  api.setProfileImg(body)
+  api.setProfileImg(body).then(() => {
+    res.json({result: 'OK'});
+  })
 });
 
 app.post('/api/setData', (req, res, next) => {

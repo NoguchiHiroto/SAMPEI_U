@@ -50,7 +50,7 @@ module.exports = {
   setProfileImg: (data) => {
     // console.log(data);
     const docRef = db.collection('users').doc(`${data.userName}`);
-    console.log(docRef);
+    // console.log(docRef);
     // const docRef = db.collection('users').doc('user1');
     return new Promise((resolve, reject) => {
       // docRef.get().then((snapshot) => {
@@ -72,7 +72,10 @@ module.exports = {
       docRef.set({
         img: data.img,
         userName: 'aaaa',
-      }).then(() => resolve());
+      }).then(() => {
+        console.log('DBにset完了しました')
+        resolve()
+      });
     })
   }
 } 
