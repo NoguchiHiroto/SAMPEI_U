@@ -6,7 +6,7 @@ import { useSelector, AppDispatch } from '../../store/store';
 import { changeTemp, changeIsSymptoms } from '../../slices/tempSlice';
 import { AppState } from '../../states/AppState';
 import { useDispatch } from 'react-redux';
-import { addData } from '../../../server/firebase';
+import { URL } from '../../common/variables';
 const CenteredNumberPicker = () => {
   const dispatch = useDispatch();
   const selectedNumber = useSelector((state) => state.temp.temp);
@@ -19,12 +19,12 @@ const CenteredNumberPicker = () => {
     const centerPoint = e.nativeEvent.contentOffset.x + e.nativeEvent.layoutMeasurement.width / 2;
     const index = Math.round(centerPoint / itemSize); // 数字のリストコンポーネントの中央をアイテムサイズで割ることで何番目のコンポーネントなのかを特定する
     // console.log('新たに選択されたのは',index);
-    fetch('http://127.0.0.1:8000/api/getData')
-      .then((res) => res.json())
-      .then(data => console.log(data))
-      .catch((err) => {
-        console.error('Error!', err);
-      });
+    // fetch(URL.getComments)
+    //   .then((res) => res.json())
+    //   .then(data => console.log(data))
+    //   .catch((err) => {
+    //     console.error('Error!', err);
+    //   });
     dispatch(changeTemp(numbers[index])); // stateを更新
   };
 
@@ -36,7 +36,6 @@ const CenteredNumberPicker = () => {
       const offset = Math.max(0, selectedIndex * itemSize - (Dimensions.get('window').width - itemSize) / 2);
       // flatListRef.current.scrollToIndex({ animated: true, index: initialIndex, viewPosition: 0.5, viewOffset: offset});
       // flatListRef.current.scrollToOffset({ animated: true, offset: offset });
-      console.log('ssss')
       flatListRef.current.scrollToIndex({ animated: true, index: selectedIndex, viewPosition: 0.5 });
     }
   }, []);

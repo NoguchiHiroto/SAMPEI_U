@@ -18,6 +18,9 @@ const GroupStyles = StyleSheet.create<Styles>({
   text: {
     fontSize: 16,
     color: 'black',
+  },
+  table: {
+    
   }
 })
 

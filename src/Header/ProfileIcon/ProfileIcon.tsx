@@ -7,15 +7,15 @@ import ProfileIconImage from './../ProfileIcon.png';
 import { MediaType, launchImageLibrary } from 'react-native-image-picker';
 import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
+import { URL } from '../../common/variables';
 const fs = require('fs');
 const path = require('path');
-const userName = 'Noguchi7'
+const userName = 'Noguchi6'
 
 // 画像をbase64形式にエンコードする
 const encodeImageToBase64 = (imageUri:string) => {
   return new Promise((resolve, reject) => {
     // iphone内のPathを引数にして画像を取得する
-    // console.log(imageUri);
     fetch(imageUri)
       .then((response) => response.blob())
       .then((blob) => {
@@ -30,7 +30,7 @@ const encodeImageToBase64 = (imageUri:string) => {
   }) 
 }
 const postProfileImg = (body:any) => {
-  return fetch('http://127.0.0.1:8000/api/setProfileImg', {
+  return fetch(URL.setProfileImg, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -83,7 +83,11 @@ const ProfileIcon = () => {
       } else if (response.assets && response.assets.length > 0) {
         ImageResizer.createResizedImage(response.assets[0].uri, 200, 200, 'JPEG', 80)
         .then(({uri}) => uploadImageToDatabase(uri))
-        .then((uri) => setImageUri(uri));
+        .then((uri) => {
+          fetch(URL.getProfileImgs).then(() => {
+            setImageUri(uri);
+          });
+        });
         
       }
     });

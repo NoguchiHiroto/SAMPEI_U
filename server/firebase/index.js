@@ -1,5 +1,5 @@
 const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
-const { getFirestore, Timestamp, FieldValue, Filter } = require('firebase-admin/firestore');
+const { getFirestore, collection, getDocs } = require('firebase-admin/firestore');
 const serviceAccount = require('./ondu-ee7db-firebase-adminsdk-7c0xz-2f1cf505b0.json')
 
 initializeApp({
@@ -10,7 +10,7 @@ const db = getFirestore();
 
 
 module.exports = {
-  addData: (data) => {
+  addComment: (data) => {
     const docRef = db.collection('comment').doc(`${data.userName}`).collection(`${data.year}-${data.month}-${data.date}`).doc(`${data.hour}:${data.minute}`);
     return new Promise((resolve, reject) => {
       docRef.set({
@@ -25,7 +25,7 @@ module.exports = {
       }).then(() => resolve());
     })
   },
-  getData: (date='2023-12-24') => {
+  getComments: (date='2023-12-24') => {
     const refAll = db.collection('comment').doc('Noguchi').collection(date);
     return new Promise((resolve, reject) => {
       refAll.get().then((snapshot) => {
@@ -44,6 +44,28 @@ module.exports = {
       }).catch((err) => {
         reject({});
         throw new Error(err);
+      })
+    })
+  },
+  getProfileImgs: () => {
+    const ref =  db.collection('users');
+    return new Promise((resolve, reject) => {
+      ref.get().then((snapshot) => {
+        if (snapshot.empty) {
+          console.log('そのようなユーザー名のユーザーは存在しません');
+        } else {
+          // console.log('users', snapshot);
+          const result = {};
+          snapshot.forEach((doc) => {
+            userInfo  = doc.data();
+            result[userInfo.userName] = userInfo.img;
+            
+          });
+          resolve(result);
+        }
+      }).catch((err) => {
+        reject();
+        console.error(err);
       })
     })
   },
@@ -71,7 +93,7 @@ module.exports = {
 
       docRef.set({
         img: data.img,
-        userName: 'aaaa',
+        userName: data.userName,
       }).then(() => {
         console.log('DBにset完了しました')
         resolve()

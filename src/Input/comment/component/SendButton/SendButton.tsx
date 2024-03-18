@@ -7,6 +7,7 @@ import { TouchableHighlight, GestureHandlerRootView } from 'react-native-gesture
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
 import { getMoment } from '../../../../common/getMoment';
+import { URL } from '../../../../common/variables';
 interface Body extends FormData {
   comment: string;
   year: number;
@@ -31,15 +32,15 @@ export const SendButton = () => {
     body.append('minute', now.minute);
     body.append('userName', userName);
     body.append('userID', 12345);
-    console.log('body:',body);
-    console.log('comment:',comment);
-    fetch('http://127.0.0.1:8000/api/setData', {
+    fetch(URL.setComment, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(body),
-    }).then((res) => res.json()).then(value => console.log(value))
+    })
+    .then((res) => res.json())
+    .then(value => console.log(value))
     // getData().then(value => console.log(value))
   }
   return (
