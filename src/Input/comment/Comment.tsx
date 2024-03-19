@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useSelector } from '../../store/store';
 import { useDispatch } from 'react-redux';
 import { View, Text, TouchableOpacity, TextInput, Button, StyleSheet } from 'react-native';
-import { addData } from '../../../server/firebase';
 import styles from './styles';
 
 import { Title } from './component/Title/Title';

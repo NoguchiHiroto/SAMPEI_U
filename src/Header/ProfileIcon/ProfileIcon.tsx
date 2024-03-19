@@ -10,7 +10,7 @@ import ImageResizer from 'react-native-image-resizer';
 import { URL } from '../../common/variables';
 const fs = require('fs');
 const path = require('path');
-const userName = 'Noguchi6'
+const userName = '伊東 匠'
 
 // 画像をbase64形式にエンコードする
 const encodeImageToBase64 = (imageUri:string) => {

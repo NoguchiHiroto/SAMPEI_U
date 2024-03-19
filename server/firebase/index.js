@@ -1,6 +1,15 @@
 const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
 const { getFirestore, collection, getDocs } = require('firebase-admin/firestore');
 const serviceAccount = require('./ondu-ee7db-firebase-adminsdk-7c0xz-2f1cf505b0.json')
+const moment = require('moment');
+const { raw } = require('body-parser');
+
+const now = moment();
+const year = now.year();
+const month = (now.month() + 1).toString().padStart(2, '0');
+const date = (now.date()).toString().padStart(2, '0');
+const hour = now.hour();
+const minute = now.minute();
 
 initializeApp({
   credential: cert(serviceAccount)
@@ -25,8 +34,8 @@ module.exports = {
       }).then(() => resolve());
     })
   },
-  getComments: (date='2023-12-24') => {
-    const refAll = db.collection('comment').doc('Noguchi').collection(date);
+  getComments: () => {
+    const refAll = db.collection('comment').doc('Noguchi').collection(`${year}-${month}-${date}`);
     return new Promise((resolve, reject) => {
       refAll.get().then((snapshot) => {
         if (snapshot.empty) {
@@ -36,9 +45,17 @@ module.exports = {
         } else {
           // コメントがあればその日のコメントを全て取得
           const result = {}
+          const rawData = {} 
           snapshot.forEach(doc => {
-            result[doc.id] = doc.data();
+            rawData[doc.id] = doc.data();
           });
+          Object.keys(rawData).forEach((elm) => {
+            if(Object.keys(result).includes(rawData[elm].userName)) {
+              result[rawData[elm].userName].push({date: elm, comment: rawData[elm].comment}) 
+            } else {
+              result[rawData[elm].userName] = [{date: elm, comment: rawData[elm].comment}]
+            }
+          })
           resolve(result);
         }
       }).catch((err) => {

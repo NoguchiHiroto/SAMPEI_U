@@ -23,11 +23,11 @@ app.get('/api/getComments', (req, res, next) => {
   });
 });
 
-app.get('/api/getComments', (req, res, next) => {
-  api.getComments().then((data) => {
-    res.json(data);
-  });
-});
+// app.get('/api/getComments', (req, res, next) => {
+//   api.getComments().then((data) => {
+//     res.json(data);
+//   });
+// });
 
 
 
