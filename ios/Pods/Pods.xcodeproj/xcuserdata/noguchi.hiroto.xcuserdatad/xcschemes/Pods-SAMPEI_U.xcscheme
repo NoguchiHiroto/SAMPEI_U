@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D4072980F819736E7233C5C2D721DB57"
-               BuildableName = "libPods-SAMPEI_U.a"
+               BuildableName = "Pods_SAMPEI_U.framework"
                BlueprintName = "Pods-SAMPEI_U"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

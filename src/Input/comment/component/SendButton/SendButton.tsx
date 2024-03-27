@@ -45,7 +45,7 @@ export const SendButton = () => {
   }
   return (
     <LinearGradient
-      colors={['rgba(255,32,144,1)', 'rgba(255,19,191,1)']} 
+      colors={['rgba(255,32,144,1)', 'rgba(255,19,191,1)']}
       start={{x: 0, y: 0}}
       end={{x: 0, y: 1}}
       style={{

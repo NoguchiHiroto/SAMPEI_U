@@ -20,6 +20,12 @@ const db = getFirestore();
 
 module.exports = {
   addComment: (data) => {
+    const now = moment();
+    const year = now.year();
+    const month = (now.month() + 1).toString().padStart(2, '0');
+    const date = (now.date()).toString().padStart(2, '0');
+    const hour = now.hour();
+    const minute = now.minute();
     const docRef = db.collection('comment').doc(`${data.userName}`).collection(`${data.year}-${data.month}-${data.date}`).doc(`${data.hour}:${data.minute}`);
     return new Promise((resolve, reject) => {
       docRef.set({
@@ -35,6 +41,12 @@ module.exports = {
     })
   },
   getComments: () => {
+    const now = moment();
+    const year = now.year();
+    const month = (now.month() + 1).toString().padStart(2, '0');
+    const date = (now.date()).toString().padStart(2, '0');
+    const hour = now.hour();
+    const minute = now.minute();
     const refAll = db.collection('comment').doc('Noguchi').collection(`${year}-${month}-${date}`);
     return new Promise((resolve, reject) => {
       refAll.get().then((snapshot) => {
@@ -65,6 +77,12 @@ module.exports = {
     })
   },
   getProfileImgs: () => {
+    const now = moment();
+    const year = now.year();
+    const month = (now.month() + 1).toString().padStart(2, '0');
+    const date = (now.date()).toString().padStart(2, '0');
+    const hour = now.hour();
+    const minute = now.minute();
     const ref =  db.collection('users');
     return new Promise((resolve, reject) => {
       ref.get().then((snapshot) => {
@@ -87,6 +105,12 @@ module.exports = {
     })
   },
   setProfileImg: (data) => {
+    const now = moment();
+    const year = now.year();
+    const month = (now.month() + 1).toString().padStart(2, '0');
+    const date = (now.date()).toString().padStart(2, '0');
+    const hour = now.hour();
+    const minute = now.minute();
     // console.log(data);
     const docRef = db.collection('users').doc(`${data.userName}`);
     // console.log(docRef);
