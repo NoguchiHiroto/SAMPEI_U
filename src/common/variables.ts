@@ -9,8 +9,8 @@ export const symptomsList = [
 export const rootPath = '/Users/noguchi.hiroto/Documents/ONDU/';
 
 export const URL = {
-  getProfileImgs: 'http://127.0.0.1:8000/api/getProfileImgs/',
-  getComments: 'http://127.0.0.1:8000/api/getComments/',
-  setProfileImg: 'http://127.0.0.1:8000/api/setProfileImg/',
-  setComment: 'http://127.0.0.1:8000/api/setComment/',
+  getProfileImgs: 'http://10.0.2.2:8000/api/getProfileImgs/',
+  getComments: 'http://10.0.2.2:8000/api/getComments/',
+  setProfileImg: 'http://10.0.2.2:8000/api/setProfileImg/',
+  setComment: 'http://10.0.2.2:8000/api/setComment/',
 }
