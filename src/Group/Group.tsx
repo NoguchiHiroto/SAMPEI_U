@@ -12,14 +12,23 @@ import { getMoment } from '../common/getMoment';
 import firestore from '@react-native-firebase/firestore';
 
 function fetchData() {
-  firestore()
-    .collection('users')
-    .get()
-    .then(querySnapshot => {
-      querySnapshot.forEach(documentSnapshot => {
-        console.log('Document ID: ', documentSnapshot.id, documentSnapshot.data());
-      });
-    });
+  return new Promise((resolve, reject) => {
+    firestore()
+      .collection('users')
+      .get()
+      .then(querySnapshot => {
+        // console.log('EEEEEEEEEEE')
+        querySnapshot.forEach(documentSnapshot => {
+          const data = documentSnapshot.data();
+          console.log('data',Object.keys(data))
+          console.log('data',data.userName)
+          // console.log('Documrent ID: ', documentSnapshot.id, documentSnapshot.data());
+          resolve('OK');
+        });
+      }).catch((err:any) => {
+        console.log('error', err)
+      })
+  })
 }
 // Detailsスクリーンのコンポーネント
 
@@ -33,26 +42,27 @@ const Group: React.FC = () => {
 
   // 初回に実行する
   useEffect(() => {
-    fetchData()
-    fetch(URL.getProfileImgs)
-    .then(response => {
-      // console.log("RESPONSE", response);
-      return response.json()
-    })
-    .then((Imgs:any) => {
-      // console.log("IMGs")
-      setProfileImgs(Imgs);
-    });
-
-    fetch(URL.getComments)
-    .then(response => {
-      // console.log("RESPONSE", response);
-      return response.json()
-    })
-    .then((Comments:any) => {
-      console.log(Comments);
-      // console.log("Comments")
-      setCooments(Comments);
+    fetchData().then(() => {
+      fetch(URL.getProfileImgs)
+      .then(response => {
+        // console.log("RESPONSE", response);
+        return response.json()
+      })
+      .then((Imgs:any) => {
+        // console.log("IMGs")
+        setProfileImgs(Imgs);
+      });
+  
+      fetch(URL.getComments)
+      .then(response => {
+        // console.log("RESPONSE", response);
+        return response.json()
+      })
+      .then((Comments:any) => {
+        console.log(Comments);
+        // console.log("Comments")
+        setCooments(Comments);
+      });
     });
   }, []);
 

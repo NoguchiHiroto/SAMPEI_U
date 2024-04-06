@@ -9,18 +9,17 @@ import Footer from './src/Footer/Footer';
 import DrawerMenu from './src/Header/Menu/DrawerMenu';
 import firebase from '@react-native-firebase/app';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBfY0SZjHRg64G4cPP0pQu_jiTbDlPm_qw",
-  projectId: "ondu-ee7db",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID"
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyBfY0SZjHRg64G4cPP0pQu_jiTbDlPm_qw",
+//   projectId: "ondu-ee7db",
+//   // messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+//   appId: "1:610582804749:android:422787ce8e914ffe72d844",
+//   measurementId: "YOUR_MEASUREMENT_ID"
+// };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+// if (!firebase.apps.length) {
+//   firebase.initializeApp(firebaseConfig);
+// }
 // スクリーンのパラメータを定義する型
 
 type RootStackParamList = {
