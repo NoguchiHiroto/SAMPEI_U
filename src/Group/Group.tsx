@@ -9,6 +9,18 @@ import { Table, Row, Rows, TableWrapper, Cell } from 'react-native-table-compone
 import { URL } from '../common/variables';
 import GroupStyles from './styles';
 import { getMoment } from '../common/getMoment';
+import firestore from '@react-native-firebase/firestore';
+
+function fetchData() {
+  firestore()
+    .collection('users')
+    .get()
+    .then(querySnapshot => {
+      querySnapshot.forEach(documentSnapshot => {
+        console.log('Document ID: ', documentSnapshot.id, documentSnapshot.data());
+      });
+    });
+}
 // Detailsスクリーンのコンポーネント
 
 const Group: React.FC = () => {
@@ -21,6 +33,7 @@ const Group: React.FC = () => {
 
   // 初回に実行する
   useEffect(() => {
+    fetchData()
     fetch(URL.getProfileImgs)
     .then(response => {
       // console.log("RESPONSE", response);

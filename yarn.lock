@@ -1892,13 +1892,18 @@
   resolved "https://registry.npmjs.org/@react-native-community/masked-view/-/masked-view-0.1.11.tgz"
   integrity sha512-rQfMIGSR/1r/SyN87+VD8xHHzDYeHaJq6elOSCAD+0iLagXkSI2pfA0LmSXP21uw5i3em7GkkRjfJ8wpqWXZNw==
 
-"@react-native-firebase/app@^19.0.1":
-  version "19.0.1"
-  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-19.0.1.tgz"
-  integrity sha512-opwy3mQfu0Vg7Fz07EzNCuRI6Wr8U3n6wp0IIwDbNg5zJWQN7ALa9OSN1SA16RhPepIXO1fFWbwmRsL2nOgrIw==
+"@react-native-firebase/app@^19.1.2", "@react-native-firebase/app@19.1.2":
+  version "19.1.2"
+  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-19.1.2.tgz"
+  integrity sha512-5PJSbsdl6xvWq+V5/MfmeLWkpf1tcIheP6UYHgIy8p/mfsQRQIzUSDD7MMKdJqSQOrjdu91hWGdDvnRIdk+f1g==
   dependencies:
     opencollective-postinstall "^2.0.3"
     superstruct "^0.6.2"
+
+"@react-native-firebase/firestore@^19.1.2":
+  version "19.1.2"
+  resolved "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-19.1.2.tgz"
+  integrity sha512-J/PUtAZY0mlPGYe7NAcdJ4eeWbWQeUCP4dueSHRr9CgQRyo4zq7WQQKVI9N3ZHSOgvX8RGmX8LDZSbUzwbVzfg==
 
 "@react-native-masked-view/masked-view@^0.3.0":
   version "0.3.1"
