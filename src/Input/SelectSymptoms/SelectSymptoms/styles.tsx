@@ -18,12 +18,11 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderTopColor: themeColor,
     padding: 10,
-
-    ttlText: {
-      textAlign: 'center',
-      fontSize: $ttlFontSize,
-      fontWeight:'bold'
-    } as TextStyle
+    // ttlText: {
+    //   textAlign: 'center',
+    //   fontSize: $ttlFontSize,
+    //   fontWeight:'bold'
+    // } as TextStyle,
   },
   buttonWrapper: {
     padding: 10,
@@ -35,20 +34,20 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 25,
     backgroundColor: 'lightgray',
-    Text: {
-      color: 'black',
-      fontSize: $fontSize,
-    } as TextStyle,
     ...commonStyles,
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: $fontSize,
   },
   selectedButton: {
     borderRadius: 25,
     backgroundColor: themeColor,
-    Text: {
-      color: 'white',
-      fontSize: $fontSize,
-    },
     ...commonStyles,
+  },
+  selectedButtonText: {
+    color: 'white',
+    fontSize: $fontSize,
   },
 });
 

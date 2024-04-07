@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import { Text, View, Button, Image } from 'react-native';
 import { StyleSheetProperties, StyleSheet, Dimensions } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -10,31 +10,15 @@ import { URL } from '../common/variables';
 import GroupStyles from './styles';
 import { getMoment } from '../common/getMoment';
 import firestore from '@react-native-firebase/firestore';
+import getComments from '../common/api/getComments';
+import getUsersProfile from '../common/api/getProfileImgs';
 
-function fetchData() {
-  return new Promise((resolve, reject) => {
-    firestore()
-      .collection('users')
-      .get()
-      .then(querySnapshot => {
-        // console.log('EEEEEEEEEEE')
-        querySnapshot.forEach(documentSnapshot => {
-          const data = documentSnapshot.data();
-          console.log('data',Object.keys(data))
-          console.log('data',data.userName)
-          // console.log('Documrent ID: ', documentSnapshot.id, documentSnapshot.data());
-          resolve('OK');
-        });
-      }).catch((err:any) => {
-        console.log('error', err)
-      })
-  })
-}
 // Detailsスクリーンのコンポーネント
 
 const Group: React.FC = () => {
+  const isFocused = useIsFocused();
   const [profileImgs, setProfileImgs] = useState<any>({}); // {userName: base64Image}
-  const [comments, setCooments] = useState<any>({}); // {userName: comment, ...}
+  const [comments, setComments] = useState<any>({}); // {userName: comment, ...}
   const [isfinished, setIsfinished] = useState<boolean[]>([false, false]); // [profileImgs, comments]
 
   const now = getMoment();
@@ -42,29 +26,14 @@ const Group: React.FC = () => {
 
   // 初回に実行する
   useEffect(() => {
-    fetchData().then(() => {
-      fetch(URL.getProfileImgs)
-      .then(response => {
-        // console.log("RESPONSE", response);
-        return response.json()
-      })
-      .then((Imgs:any) => {
-        // console.log("IMGs")
-        setProfileImgs(Imgs);
-      });
-  
-      fetch(URL.getComments)
-      .then(response => {
-        // console.log("RESPONSE", response);
-        return response.json()
-      })
-      .then((Comments:any) => {
-        console.log(Comments);
-        // console.log("Comments")
-        setCooments(Comments);
-      });
+    getUsersProfile().then((profile) => {
+      console.log('prof')
+        setProfileImgs(profile);
+    })
+    getComments().then((Comments:any) => {
+        setComments(Comments);
     });
-  }, []);
+  }, [isFocused]);
 
   // プロフィールアイコン画像の取得が完了したらstate更新する
   useEffect(() => {
@@ -100,6 +69,7 @@ const Group: React.FC = () => {
       </View>
     )
     const CHECK_OK = <View style={GroupStyles.CHECK_OK__wrapper}><View style={GroupStyles.CHECK_OK}/></View>;
+    console.log('COMMENTS', comments);
     const Comment = (
       <View style={GroupStyles.Comment}>
         <Text>{comments[key] ? (comments[key])[comments[key].length - 1].comment : ''}</Text>

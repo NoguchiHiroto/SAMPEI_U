@@ -3,11 +3,12 @@ import { AppState } from "../states/AppState";
 import { symptomsList } from "../common/variables";
 import ProfileIcon from "../Header/ProfileIcon.png";
 export const initialState: AppState = {
-  userName: 'Noguchi',
+  userName: '大沼万優子２',
   temp: 36.0,
   isSymptoms: false,
   symptoms: symptomsList.map((symptoms_3) => (symptoms_3.map(() => ''))),
-  comment: '',
+  comment: {},
+  inputComment: '',
   profileImg: ProfileIcon
 }
 export const tempSlice = createSlice({
@@ -28,9 +29,12 @@ export const tempSlice = createSlice({
     },
     changePrifileImg: (state, action) => {
       state.profileImg = action.payload;
+    },
+    changeInputComment: (state, action) => {
+      state.inputComment = action.payload;
     }
   }
 });
 
-export const {changeTemp, changeIsSymptoms, changeSymptoms, changeComment, changePrifileImg} = tempSlice.actions; // Action Createrのこと
+export const {changeTemp, changeIsSymptoms, changeSymptoms, changeComment, changePrifileImg, changeInputComment} = tempSlice.actions; // Action Createrのこと
 export default tempSlice.reducer;

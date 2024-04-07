@@ -4,7 +4,7 @@ import { themeColor } from '../../../../common/styles/Styles';
 const styles = StyleSheet.create({
   button: {
     width: '100%', 
-    height: '100%', 
+    height: 80, 
     justifyContent: 'center', //　上下中央
     alignItems: 'center',
 

@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from '../../../store/store';
 import { useDispatch } from 'react-redux';
 import { changeIsSymptoms } from '../../../slices/tempSlice';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import styles from './styles';
 
-const SelectIsSymptoms = () => {
+const SelectIsSymptoms = ({state}: any) => {
   const isSymptom = useSelector((state) => state.temp.isSymptoms);
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   return (
-    <View style={styles.container}>
+    <View style={{
+      ...styles.container, 
+      display: (state.isFocused ? 'none' : 'flex')
+    }}>
       <View>
         <Text style={styles.ttlText}>本日の症状</Text>
       </View>

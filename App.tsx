@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Text, View, Button, SafeAreaView } from 'react-native';
 import { StyleSheetProperties } from 'react-native';
 import Header from './src/Header/Header';
-
+import DeviceInfo from 'react-native-device-info';
 import Footer from './src/Footer/Footer';
 import DrawerMenu from './src/Header/Menu/DrawerMenu';
 import firebase from '@react-native-firebase/app';
@@ -29,10 +29,13 @@ type RootStackParamList = {
 
 // スタックナビゲーターの作成と型の指定
 const Stack = createStackNavigator<RootStackParamList>();
+// AndroidのIMEIまたはiOSのIDFAを取得
+const uniqueId = DeviceInfo.getUniqueId();
+
 
 export default function App() {
   return (
-    <SafeAreaView style={{height: '100%'}}>
+    <SafeAreaView style={{height: '100%', flex: 1}}>
       <Header />
       <NavigationContainer>
         <Footer />

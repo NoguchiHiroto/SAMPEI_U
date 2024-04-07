@@ -7,7 +7,7 @@ import styles from './styles';
 import { Title } from './component/Title/Title';
 import { Input } from './component/Input/Input';
 import { SendButton } from './component/SendButton/SendButton';
-const Comment = () => {
+const Comment = ({ state }: any) => {
   const isSymptom = useSelector((state) => state.temp.isSymptoms);
   const dispatch = useDispatch();
   const comment = useSelector((state) => state.temp.comment);
@@ -16,7 +16,7 @@ const Comment = () => {
     
     <View style={styles.container}>
       <Title />
-      <Input />
+      <Input state={state} />
       <SendButton />
     </View>
   );

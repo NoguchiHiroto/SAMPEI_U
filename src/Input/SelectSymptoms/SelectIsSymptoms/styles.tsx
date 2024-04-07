@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderTopColor: themeColor,
     padding: 10,
+    height: 100,
   },
 
     ttlText: {

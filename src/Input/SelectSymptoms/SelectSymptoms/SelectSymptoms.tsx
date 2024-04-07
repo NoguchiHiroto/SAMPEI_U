@@ -17,7 +17,7 @@ const isIncludeSymptomsList = (symptomsState: AppState['symptoms'], symptom: str
   return false;
 };
 
-const SelectSymptoms = () => {
+const SelectSymptoms = ({state}: any) => {
   const dispatch = useDispatch();
   const isSymptoms = useSelector((state) => state.temp.isSymptoms);
   const symptoms = useSelector((state) => state.temp.symptoms);
@@ -38,13 +38,16 @@ const SelectSymptoms = () => {
   }
   console.log(symptoms)
   return (
-    <View style={isSymptoms ? styles.container : {display: 'none'}}>
+    <View style={{
+      ...(styles.container), 
+      display: ((state.isFocused || !isSymptoms) ? 'none' : 'flex')
+    }}>
       {/* 3列で症状を表示 */}
       {symptomsList.map((symptom_3, index) => (
         <View style={styles.buttonWrapper} key={index}>
           {symptom_3.map((symptom, i)  => (
             <TouchableOpacity style={isIncludeSymptomsList(symptoms,symptom) ? styles.selectedButton : styles.button} onPress={onPress(symptoms, index, i)} key={symptomsList[index][i]}>
-              <Text style={isIncludeSymptomsList(symptoms, symptom) === true ? styles.selectedButton.Text : styles.button.Text}>{symptomsList[index][i]}</Text>
+              <Text style={isIncludeSymptomsList(symptoms, symptom) === true ? styles.selectedButtonText : styles.buttonText}>{symptomsList[index][i]}</Text>
             </TouchableOpacity>
           ))}
         </View>

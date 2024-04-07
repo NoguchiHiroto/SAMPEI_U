@@ -8,6 +8,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
 import { getMoment } from '../../../../common/getMoment';
 import { URL } from '../../../../common/variables';
+import postComment from '../../../../common/api/postComment';
 interface Body extends FormData {
   comment: string;
   year: number;
@@ -20,28 +21,15 @@ interface Body extends FormData {
 }
 export const SendButton = () => {
   const userName = useSelector((state) => state.temp.userName);
-  const comment =  useSelector((state) => state.temp.comment);
+  const comment =  useSelector((state) => state.temp.inputComment);
   const sendData = () => {
-    const body = new FormData();
-    const now = getMoment();
-    body.append('comment', comment);
-    body.append('year', now.year);
-    body.append('month', now.month);
-    body.append('date', now.date);
-    body.append('hour', now.hour);
-    body.append('minute', now.minute);
-    body.append('userName', userName);
-    body.append('userID', 12345);
-    fetch(URL.setComment, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body),
-    })
-    .then((res) => res.json())
-    .then(value => console.log(value))
-    // getData().then(value => console.log(value))
+    const body = {
+      comment: comment,
+      userName: userName,
+      userID: 12345,
+    }
+    postComment(body)
+    .then(value => console.log(value));
   }
   return (
     <LinearGradient

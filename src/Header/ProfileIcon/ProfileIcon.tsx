@@ -8,9 +8,9 @@ import { MediaType, launchImageLibrary } from 'react-native-image-picker';
 import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
 import { URL } from '../../common/variables';
+import postProfileImg from '../../common/api/postProfileImg';
 const fs = require('fs');
 const path = require('path');
-const userName = '伊東 匠'
 
 // 画像をbase64形式にエンコードする
 const encodeImageToBase64 = (imageUri:string) => {
@@ -29,30 +29,28 @@ const encodeImageToBase64 = (imageUri:string) => {
       })
   }) 
 }
-const postProfileImg = (body:any) => {
-  return fetch(URL.setProfileImg, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body),
-  });
-}
+// const postProfileImg = (body:any) => {
+//   return fetch(URL.setProfileImg, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(body),
+//   });
+// }
 // 画像のuriを引数にとってDBへアップロードする
-const uploadImageToDatabase = (imageUri:string) => {
+const uploadImageToDatabase = (userName:string, imageUri:string) => {
   return new Promise<string>((resolve, reject) => {
     try {
       encodeImageToBase64(imageUri)
       .then((base64Image) => {
-        const body = new FormData();
-        body.append('img', base64Image);
-        body.append('userName', userName);
+        const body = {
+          img: base64Image,
+          userName: userName
+        };
         return postProfileImg(body);
       })
-      .then((response) => {
-        return response.json();
-      })
-      .then(() => resolve(imageUri))
+      .then((base64Image:string) => resolve(base64Image))
       .catch(err => {
         console.error(err);
       })
@@ -82,11 +80,9 @@ const ProfileIcon = () => {
         console.log('ImagePicker Error: ', response.errorMessage);
       } else if (response.assets && response.assets.length > 0) {
         ImageResizer.createResizedImage(response.assets[0].uri, 200, 200, 'JPEG', 80)
-        .then(({uri}) => uploadImageToDatabase(uri))
+        .then(({uri}) => uploadImageToDatabase(userName, uri))
         .then((uri) => {
-          fetch(URL.getProfileImgs).then(() => {
-            setImageUri(uri);
-          });
+          setImageUri(uri);
         });
         
       }
