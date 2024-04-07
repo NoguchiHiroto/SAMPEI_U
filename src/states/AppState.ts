@@ -3,7 +3,7 @@ export interface AppState {
   temp: number;
   isSymptoms: boolean;
   symptoms: string[][];
-  comment: {[userName:string]: string[]};
+  comments: {[userName:string]: {comment: string, date: string}[]};
   profileImg: any;
   inputComment: string;
 }

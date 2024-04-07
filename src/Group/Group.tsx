@@ -12,15 +12,18 @@ import { getMoment } from '../common/getMoment';
 import firestore from '@react-native-firebase/firestore';
 import getComments from '../common/api/getComments';
 import getUsersProfile from '../common/api/getProfileImgs';
-
+import { changeComments } from '../slices/tempSlice';
+import Modal from 'react-native-modal';
 // Detailsスクリーンのコンポーネント
 
 const Group: React.FC = () => {
+  const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const [profileImgs, setProfileImgs] = useState<any>({}); // {userName: base64Image}
-  const [comments, setComments] = useState<any>({}); // {userName: comment, ...}
+  // const [comments, setComments] = useState<any>({}); // {userName: comment, ...}
   const [isfinished, setIsfinished] = useState<boolean[]>([false, false]); // [profileImgs, comments]
-
+  const comments = useSelector((state) => state.temp.comments);
+  // console.log('COMMENTS', comments)
   const now = getMoment();
   const date = `${now.year}-${now.month}-${now.date}`;
 
@@ -31,7 +34,8 @@ const Group: React.FC = () => {
         setProfileImgs(profile);
     })
     getComments().then((Comments:any) => {
-        setComments(Comments);
+      // console.log('COMMENTS', Comments);
+      dispatch(changeComments(Comments));
     });
   }, [isFocused]);
 
@@ -62,6 +66,7 @@ const Group: React.FC = () => {
   const tableHead = [<Text>記入状況</Text>, <Text>本日の検温</Text>, ''];
   const tableData:any = [];
   Object.keys(profileImgs).forEach((key) => {
+
     const Account = (
       <View style={GroupStyles.Account}>
         <Image source={{uri: profileImgs[key]}} style={GroupStyles.ProfileIcon} />
@@ -82,6 +87,7 @@ const Group: React.FC = () => {
   const LR_SIZE = 0.40;
   const CENTER_SIZE = 1 - LR_SIZE * 2;
   const widthArr = [Window_width * LR_SIZE, Window_width * CENTER_SIZE, Window_width*LR_SIZE];
+  
   return (
     <View style={GroupStyles.container}>
       <TableWrapper>
@@ -90,6 +96,12 @@ const Group: React.FC = () => {
           <Rows data={tableData} style={{marginTop: 20}} widthArr={widthArr}/>
         </Table>
       </TableWrapper>
+      <Modal isVisible={true} style={{justifyContent: 'center', alignItems: 'center'}}> 
+        <View style={{width: 100, height: 100, backgroundColor: 'red', justifyContent: 'center', alignItems: 'center'}}>
+          <Text>Modal</Text>
+        </View>
+      </Modal>
+      
     </View>
   )
 }

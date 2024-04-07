@@ -18,13 +18,6 @@ const CenteredNumberPicker = () => {
   const onMomentumScrollEnd = (e:any) => {
     const centerPoint = e.nativeEvent.contentOffset.x + e.nativeEvent.layoutMeasurement.width / 2;
     const index = Math.round(centerPoint / itemSize); // 数字のリストコンポーネントの中央をアイテムサイズで割ることで何番目のコンポーネントなのかを特定する
-    // console.log('新たに選択されたのは',index);
-    // fetch(URL.getComments)
-    //   .then((res) => res.json())
-    //   .then(data => console.log(data))
-    //   .catch((err) => {
-    //     console.error('Error!', err);
-    //   });
     dispatch(changeTemp(numbers[index])); // stateを更新
   };
 

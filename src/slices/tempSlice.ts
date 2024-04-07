@@ -7,7 +7,7 @@ export const initialState: AppState = {
   temp: 36.0,
   isSymptoms: false,
   symptoms: symptomsList.map((symptoms_3) => (symptoms_3.map(() => ''))),
-  comment: {},
+  comments: {},
   inputComment: '',
   profileImg: ProfileIcon
 }
@@ -24,8 +24,8 @@ export const tempSlice = createSlice({
     changeSymptoms: (state, action) => {
       state.symptoms = action.payload;
     },
-    changeComment: (state, action) => {
-      state.comment = action.payload;
+    changeComments: (state, action) => {
+      state.comments = action.payload;
     },
     changePrifileImg: (state, action) => {
       state.profileImg = action.payload;
@@ -36,5 +36,5 @@ export const tempSlice = createSlice({
   }
 });
 
-export const {changeTemp, changeIsSymptoms, changeSymptoms, changeComment, changePrifileImg, changeInputComment} = tempSlice.actions; // Action Createrのこと
+export const {changeTemp, changeIsSymptoms, changeSymptoms, changeComments, changePrifileImg, changeInputComment} = tempSlice.actions; // Action Createrのこと
 export default tempSlice.reducer;
