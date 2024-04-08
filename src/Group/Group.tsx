@@ -14,12 +14,14 @@ import getComments from '../common/api/getComments';
 import getUsersProfile from '../common/api/getProfileImgs';
 import { changeComments } from '../slices/tempSlice';
 import Modal from 'react-native-modal';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 // Detailsスクリーンのコンポーネント
 
 const Group: React.FC = () => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const [profileImgs, setProfileImgs] = useState<any>({}); // {userName: base64Image}
+  const [isModalOpen, setIsModalOpen] = useState(false);
   // const [comments, setComments] = useState<any>({}); // {userName: comment, ...}
   const [isfinished, setIsfinished] = useState<boolean[]>([false, false]); // [profileImgs, comments]
   const comments = useSelector((state) => state.temp.comments);
@@ -66,7 +68,6 @@ const Group: React.FC = () => {
   const tableHead = [<Text>記入状況</Text>, <Text>本日の検温</Text>, ''];
   const tableData:any = [];
   Object.keys(profileImgs).forEach((key) => {
-
     const Account = (
       <View style={GroupStyles.Account}>
         <Image source={{uri: profileImgs[key]}} style={GroupStyles.ProfileIcon} />
@@ -77,7 +78,9 @@ const Group: React.FC = () => {
     console.log('COMMENTS', comments);
     const Comment = (
       <View style={GroupStyles.Comment}>
-        <Text>{comments[key] ? (comments[key])[comments[key].length - 1].comment : ''}</Text>
+        <TouchableOpacity onPress={() => setIsModalOpen(true)}>
+          <Text>{comments[key] ? (comments[key])[comments[key].length - 1].comment : ''}</Text>
+        </TouchableOpacity>
       </View>
     );
     const data = [ Account, CHECK_OK, Comment];
@@ -96,7 +99,7 @@ const Group: React.FC = () => {
           <Rows data={tableData} style={{marginTop: 20}} widthArr={widthArr}/>
         </Table>
       </TableWrapper>
-      <Modal isVisible={true} style={{justifyContent: 'center', alignItems: 'center'}}> 
+      <Modal isVisible={isModalOpen} style={{justifyContent: 'center', alignItems: 'center'}}> 
         <View style={{width: 100, height: 100, backgroundColor: 'red', justifyContent: 'center', alignItems: 'center'}}>
           <Text>Modal</Text>
         </View>

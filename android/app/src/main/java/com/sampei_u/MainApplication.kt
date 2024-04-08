@@ -11,6 +11,9 @@ import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.react.flipper.ReactNativeFlipper
 import com.facebook.soloader.SoLoader
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage
+import java.util.Arrays
+import java.util.List
 
 class MainApplication : Application(), ReactApplication {
 
