@@ -6,9 +6,9 @@ export interface Tab {
 };
 
 export const tabs: Tab[] = [
-  {name: 'Input', title: '入力', iconName: "house.fill"},
-  {name: 'Graph', title: 'グラフ', iconName: "house.fill"},
-  {name: 'Group', title: 'グループ', iconName: "house.fill"},
+  {name: 'input', title: '入力', iconName: "house.fill"},
+  {name: 'graph', title: 'グラフ', iconName: "house.fill"},
+  {name: 'group', title: 'グループ', iconName: "house.fill"},
 ];
 
 export interface TabBarIcon {
