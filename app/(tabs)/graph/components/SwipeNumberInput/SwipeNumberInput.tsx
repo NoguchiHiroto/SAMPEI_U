@@ -15,7 +15,8 @@ export const CenteredNumberPicker = () => {
   
   // スクロール終了時の処理を記述
   const onMomentumScrollEnd = (e:any) => {
-    const centerPoint = e.nativeEvent.contentOffset.x + e.nativeEvent.layoutMeasurement.width / 2;
+    const paddingLeft = (Dimensions.get('window').width - itemSize) / 2;
+    const centerPoint = e.nativeEvent.contentOffset.x + paddingLeft;
     const index = Math.round(centerPoint / itemSize); // 数字のリストコンポーネントの中央をアイテムサイズで割ることで何番目のコンポーネントなのかを特定する
     // dispatch(changeTemp(numbers[index])); // stateを更新
   };
