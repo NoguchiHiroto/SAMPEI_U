@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { View, FlatList, Text, Dimensions, StyleSheet } from 'react-native';
 // import { useSelector, AppDispatch } from '../../store/store';
 // import { changeTemp, changeIsSymptoms } from '../../slices/tempSlice';
@@ -8,16 +8,21 @@ import { View, FlatList, Text, Dimensions, StyleSheet } from 'react-native';
 export const CenteredNumberPicker = () => {
   // const dispatch = useDispatch();
   // const selectedNumber = useSelector((state) => state.temp.temp);
-  const selectedNumber = 12;
   const initialIndex = 20; // デフォルトで選択している体温(36.0)
   const flatListRef = useRef<FlatList<number>>(null); // 体温入力コンポーネントのref
   const numbers = Array.from({ length: 30 }, (_, i) => 34.0 + i * 0.1); // 体温一覧(34.0から0.1刻み)
+  const [selectedNumber, setSelectedNumber] = useState(numbers[initialIndex]); // 36.0度に対応
   
   // スクロール終了時の処理を記述
   const onMomentumScrollEnd = (e:any) => {
-    const paddingLeft = (Dimensions.get('window').width - itemSize) / 2;
-    const centerPoint = e.nativeEvent.contentOffset.x + paddingLeft;
-    const index = Math.round(centerPoint / itemSize); // 数字のリストコンポーネントの中央をアイテムサイズで割ることで何番目のコンポーネントなのかを特定する
+    const screenWidth = Dimensions.get('window').width;
+    const centerPoint = e.nativeEvent.contentOffset.x + screenWidth / 2;
+    const paddingLeft = (screenWidth - itemSize) / 2;
+    const adjustedCenterPoint = centerPoint - paddingLeft;
+    const index = Math.round(adjustedCenterPoint / itemSize); // 数字のリストコンポーネントの中央をアイテムサイズで割ることで何番目のコンポーネントなのかを特定する
+    if (index >= 0 && index < numbers.length) {
+      setSelectedNumber(numbers[index]); // stateを更新
+    }
     // dispatch(changeTemp(numbers[index])); // stateを更新
   };
 
@@ -95,8 +100,9 @@ const styles = StyleSheet.create({
       fontSize: 20,
     },
     selectedText: {
-      fontSize: 30,
+      fontSize: 40,
       color: 'red', // Highlight the selected number
+      fontWeight: 'bold',
     },
     label: {
       fontSize: 22,
