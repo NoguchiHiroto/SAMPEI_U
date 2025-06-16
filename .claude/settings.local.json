@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git checkout:*)",
+      "Bash(npm install:*)",
+      "Bash(mkdir:*)",
+      "WebFetch(domain:sampei-u.atlassian.net)",
+      "Bash(git pull:*)",
+      "Bash(*)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}
