@@ -2,7 +2,6 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { CenteredNumberPicker } from './components/SwipeNumberInput/SwipeNumberInput';
 
 export default function Graph() {
   // const [is]
@@ -15,7 +14,6 @@ export default function Graph() {
           style={styles.reactLogo}
         />
     }>
-        <CenteredNumberPicker />
     </ParallaxScrollView>
   );
 }

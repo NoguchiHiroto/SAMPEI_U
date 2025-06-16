@@ -5,7 +5,11 @@ import { View, FlatList, Text, Dimensions, StyleSheet } from 'react-native';
 // import { AppState } from '../../states/AppState';
 // import { useDispatch } from 'react-redux';
 // import { URL } from '../../common/variables';
-export const CenteredNumberPicker = () => {
+interface CenteredNumberPickerProps {
+  onTemperatureChange?: (temperature: number) => void;
+}
+
+export const CenteredNumberPicker = ({ onTemperatureChange }: CenteredNumberPickerProps) => {
   // const dispatch = useDispatch();
   // const selectedNumber = useSelector((state) => state.temp.temp);
   const initialIndex = 20; // デフォルトで選択している体温(36.0)
@@ -22,6 +26,7 @@ export const CenteredNumberPicker = () => {
     const index = Math.round(adjustedCenterPoint / itemSize); // 数字のリストコンポーネントの中央をアイテムサイズで割ることで何番目のコンポーネントなのかを特定する
     if (index >= 0 && index < numbers.length) {
       setSelectedNumber(numbers[index]); // stateを更新
+      onTemperatureChange?.(numbers[index]); // 親コンポーネントに体温変更を通知
     }
     // dispatch(changeTemp(numbers[index])); // stateを更新
   };
@@ -29,6 +34,7 @@ export const CenteredNumberPicker = () => {
   // 初回に選択されているものを36.0になるように調整
   useEffect(() => {
     // dispatch(changeTemp(numbers[initialIndex])); // stateを更新
+    onTemperatureChange?.(numbers[initialIndex]); // 初期値を親コンポーネントに通知
     if (flatListRef.current) {
       const selectedIndex = numbers.indexOf(selectedNumber);
       // flatListRef.current.scrollToIndex({ animated: true, index: initialIndex, viewPosition: 0.5, viewOffset: offset});
