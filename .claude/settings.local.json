@@ -7,7 +7,9 @@
       "WebFetch(domain:sampei-u.atlassian.net)",
       "Bash(git pull:*)",
       "Bash(*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(node:*)"
     ],
     "deny": []
   }

@@ -19,10 +19,24 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
     return date.toLocaleDateString('ja-JP') + ' ' + date.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
   };
 
+  const getHealthStatusColor = (status: string) => {
+    switch (status) {
+      case '良好': return '#4CAF50';
+      case '普通': return '#FF9800';
+      case '不調': return '#F44336';
+      default: return '#007AFF';
+    }
+  };
+
   return (
     <View style={styles.commentItem}>
       <View style={styles.commentHeader}>
-        <Text style={styles.userName}>ユーザー {comment.userId}</Text>
+        <View style={styles.userInfo}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>{comment.userId.toString().slice(-1)}</Text>
+          </View>
+          <Text style={styles.userName}>ユーザー {comment.userId}</Text>
+        </View>
         <Text style={styles.commentDate}>{formatDate(comment.createdAt)}</Text>
       </View>
       
@@ -31,16 +45,19 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
       <View style={styles.commentMetrics}>
         {comment.temperature && (
           <View style={styles.metricItem}>
-            <Text style={styles.metricLabel}>体温:</Text>
+            <View style={styles.metricIcon}>
+              <Text style={styles.temperatureIcon}>🌡️</Text>
+            </View>
             <Text style={styles.metricValue}>{comment.temperature}°C</Text>
           </View>
         )}
         {comment.healthStatus && (
           <View style={styles.metricItem}>
-            <Text style={styles.metricLabel}>健康状態:</Text>
-            <Text style={[styles.metricValue, styles.healthStatusValue]}>
-              {comment.healthStatus}
-            </Text>
+            <View style={[styles.healthStatusBadge, { backgroundColor: getHealthStatusColor(comment.healthStatus) }]}>
+              <Text style={styles.healthStatusText}>
+                {comment.healthStatus}
+              </Text>
+            </View>
           </View>
         )}
       </View>
@@ -148,27 +165,45 @@ const styles = StyleSheet.create({
   },
   commentItem: {
     backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 12,
+    borderRadius: 12,
+    padding: 20,
+    marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#eee',
+    borderColor: '#f0f0f0',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 3,
   },
   commentHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 12,
+  },
+  userInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  avatar: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#007AFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatarText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 14,
   },
   userName: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
-    color: '#007AFF',
+    color: '#333',
   },
   commentDate: {
     fontSize: 12,
@@ -178,28 +213,41 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     color: '#333',
-    marginBottom: 12,
+    marginBottom: 16,
   },
   commentMetrics: {
     flexDirection: 'row',
-    gap: 16,
+    gap: 12,
+    alignItems: 'center',
   },
   metricItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    gap: 6,
   },
-  metricLabel: {
-    fontSize: 12,
-    color: '#666',
+  metricIcon: {
+    width: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  temperatureIcon: {
+    fontSize: 16,
   },
   metricValue: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '600',
     color: '#333',
   },
-  healthStatusValue: {
-    color: '#007AFF',
+  healthStatusBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  healthStatusText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '600',
   },
   loadingContainer: {
     flex: 1,

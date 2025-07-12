@@ -11,6 +11,7 @@ export default function InputScreen() {
   const [comment, setComment] = useState('');
   const [temperature, setTemperature] = useState<number | null>(36.0);
   const [healthStatus, setHealthStatus] = useState<'良好' | '普通' | '不調' | null>(null);
+  const [isCommentFocused, setIsCommentFocused] = useState(false);
   
   const dispatch = useDispatch<AppDispatch>();
   const { submitting } = useSelector((state: RootState) => state.comments);
@@ -40,7 +41,7 @@ export default function InputScreen() {
       setTemperature(36.0);
       setHealthStatus(null);
       Alert.alert('成功', 'コメントを投稿しました');
-    } catch (error) {
+    } catch {
       Alert.alert('エラー', 'コメントの投稿に失敗しました');
     }
   };
@@ -61,14 +62,21 @@ export default function InputScreen() {
         <Text style={styles.sectionTitle}>コメント</Text>
         
         <TextInput
-          style={styles.commentInput}
+          style={[
+            styles.commentInput,
+            isCommentFocused && styles.commentInputFocused
+          ]}
           placeholder="今日の体調やコメントを入力してください"
+          placeholderTextColor="#999"
           value={comment}
           onChangeText={setComment}
+          onFocus={() => setIsCommentFocused(true)}
+          onBlur={() => setIsCommentFocused(false)}
           multiline
           numberOfLines={4}
           maxLength={500}
         />
+        <Text style={styles.characterCount}>{comment.length}/500</Text>
         
         <View style={styles.healthStatusSection}>
           <Text style={styles.healthStatusTitle}>健康状態</Text>
@@ -135,13 +143,31 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   commentInput: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    padding: 12,
+    borderWidth: 2,
+    borderColor: '#e1e5e9',
+    borderRadius: 12,
+    padding: 16,
     fontSize: 16,
     textAlignVertical: 'top',
+    backgroundColor: '#f8f9fa',
+    marginBottom: 8,
+    minHeight: 100,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 1,
+  },
+  commentInputFocused: {
+    borderColor: '#007AFF',
     backgroundColor: '#fff',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+  },
+  characterCount: {
+    textAlign: 'right',
+    fontSize: 12,
+    color: '#666',
     marginBottom: 16,
   },
   healthStatusSection: {
@@ -159,13 +185,18 @@ const styles = StyleSheet.create({
   },
   healthStatusButton: {
     flex: 1,
-    paddingVertical: 8,
+    paddingVertical: 12,
     paddingHorizontal: 12,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 6,
+    borderWidth: 2,
+    borderColor: '#e1e5e9',
+    borderRadius: 8,
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#f8f9fa',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
   },
   healthStatusButtonActive: {
     backgroundColor: '#007AFF',
@@ -181,10 +212,15 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     backgroundColor: '#007AFF',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    borderRadius: 12,
     alignItems: 'center',
+    shadowColor: '#007AFF',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
   },
   submitButtonDisabled: {
     backgroundColor: '#ccc',
