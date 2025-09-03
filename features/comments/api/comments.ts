@@ -1,10 +1,10 @@
-import { Hono } from 'hono';
 import { createClient } from '@supabase/supabase-js';
+import { desc, eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/postgres-js';
+import { Hono } from 'hono';
 import postgres from 'postgres';
+import { commentSchema } from '../../../types/comment';
 import { comments } from '../schema/comment';
-import { commentSchema, CommentResponse } from '../types/comment';
-import { eq, and, desc } from 'drizzle-orm';
 
 const app = new Hono();
 

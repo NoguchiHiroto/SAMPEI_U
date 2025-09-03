@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { Image } from 'expo-image';
-import { StyleSheet, View, Text, FlatList, ActivityIndicator, RefreshControl } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/store/store';
 import { fetchGroupComments } from '@/slice/commentSlice';
-import { CommentResponse } from '@/features/comments/types/comment';
+import { AppDispatch, RootState } from '@/store/store';
+import { CommentResponse } from '@/types/comment';
+import { Image } from 'expo-image';
+import React, { useEffect } from 'react';
+import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface CommentItemProps {
   comment: CommentResponse;
@@ -91,7 +91,7 @@ export default function GroupScreen() {
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
+          source={require('@/assets/img/partial-react-logo.png')}
           style={styles.reactLogo}
         />
       }

@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { CommentInput, CommentResponse } from '../features/comments/types/comment';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { CommentInput, CommentResponse } from '../types/comment';
 
 interface CommentState {
   comments: CommentResponse[];

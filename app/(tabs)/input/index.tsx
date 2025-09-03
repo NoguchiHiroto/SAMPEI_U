@@ -1,11 +1,12 @@
+import logo from '@/assets/img/react-logo.png';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { Image } from 'expo-image';
-import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, TouchableOpacity, Text, Alert } from 'react-native';
-import { CenteredNumberPicker } from './components/SwipeNumberInput/SwipeNumberInput';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/store/store';
 import { submitComment } from '@/slice/commentSlice';
+import { AppDispatch, RootState } from '@/store/store';
+import { Image } from 'expo-image';
+import { useState } from 'react';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { CenteredNumberPicker } from './components/SwipeNumberInput/SwipeNumberInput';
 
 export default function InputScreen() {
   const [comment, setComment] = useState('');
@@ -17,33 +18,54 @@ export default function InputScreen() {
   const { submitting } = useSelector((state: RootState) => state.comments);
   const { currentUser } = useSelector((state: RootState) => state.users);
 
-  const handleSubmit = async () => {
-    if (!comment.trim()) {
-      Alert.alert('エラー', 'コメントを入力してください');
-      return;
-    }
-
-    if (!currentUser) {
-      Alert.alert('エラー', 'ユーザー情報が取得できません');
-      return;
-    }
-
-    try {
-      await dispatch(submitComment({
-        userId: currentUser.id,
-        groupId: currentUser.groupId,
-        content: comment.trim(),
-        temperature: temperature || undefined,
-        healthStatus: healthStatus || undefined,
-      })).unwrap();
-
-      setComment('');
-      setTemperature(36.0);
-      setHealthStatus(null);
-      Alert.alert('成功', 'コメントを投稿しました');
-    } catch {
-      Alert.alert('エラー', 'コメントの投稿に失敗しました');
-    }
+  const handleSubmit = () => {
+    return new Promise((resolve, reject) => {
+      if (!comment.trim()) {
+        Alert.alert('エラー', 'コメントを入力してください');
+        reject('コメントが入力されていません');
+      } else if (!currentUser) {
+        Alert.alert('エラー', 'ユーザー情報が取得できません');
+        reject('ユーザー情報が取得できません');
+      } else {
+        try {
+          dispatch(submitComment({
+            userId: currentUser.id,
+            groupId: currentUser.groupId,
+            content: comment.trim(),
+            temperature: temperature || undefined,
+            healthStatus: healthStatus || undefined,
+          })).unwrap().then((result) => {
+            console.log('Comment submitted successfully:', result);
+            setComment('');
+            setTemperature(36.0);
+            setHealthStatus(null);
+            Alert.alert('成功', 'コメントを投稿しました');
+          });
+        } catch (err) {
+          // unwrap() は失敗時にエラーをスローするので、ここでキャッチできる
+          const errorMessage = err instanceof Error ? err.message : 'コメントの投稿に失敗しました';
+          Alert.alert('エラー', errorMessage);
+        }
+      }
+      try {
+        dispatch(submitComment({
+          userId: currentUser.id,
+          groupId: currentUser.groupId,
+          content: comment.trim(),
+          temperature: temperature || undefined,
+          healthStatus: healthStatus || undefined,
+        })).unwrap();
+  
+        setComment('');
+        setTemperature(36.0);
+        setHealthStatus(null);
+        Alert.alert('成功', 'コメントを投稿しました');
+      } catch (err) {
+        // unwrap() は失敗時にエラーをスローするので、ここでキャッチできる
+        const errorMessage = err instanceof Error ? err.message : 'コメントの投稿に失敗しました';
+        Alert.alert('エラー', errorMessage);
+      }
+    })
   };
 
   return (
@@ -51,7 +73,7 @@ export default function InputScreen() {
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
         <Image 
-          source={require('@/assets/images/partial-react-logo.png')} 
+          source={logo} 
           style={styles.reactLogo} 
         />
       }

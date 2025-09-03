@@ -3,16 +3,6 @@ import { TypedUseSelectorHook, useDispatch as rawUseDispatch, useSelector as raw
 import commentReducer from '../slice/commentSlice';
 import userReducer from '../slice/userSlice';
 
-
-const INITIAL_STATE = {
-  userName: 'Noguchi',
-  temp: 36.0,
-  isSymptom: false,
-  symptoms: [],
-  comments: {},
-  inputComment: '',
-}
-
 export const store = configureStore({
   reducer: {
     comments: commentReducer,

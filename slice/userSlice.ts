@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserResponse } from '../features/users/types/user';
+import { UserResponse } from '../types/user';
 
 interface UserState {
   currentUser: UserResponse | null;
