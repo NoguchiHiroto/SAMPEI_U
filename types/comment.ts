@@ -8,7 +8,7 @@ export const commentSchema = z.object({
   healthStatus: z.enum(['良好', '普通', '不調']).optional()
 });
 
-export const commentResponseSchema = z.object({
+export const CommentResponseSchema = z.object({
   id: z.number(),
   userId: z.number(),
   groupId: z.number(),
@@ -20,4 +20,4 @@ export const commentResponseSchema = z.object({
 });
 
 export type CommentInput = z.infer<typeof commentSchema>;
-export type CommentResponse = z.infer<typeof commentResponseSchema>;
+export type CommentResponse = z.infer<typeof CommentResponseSchema>;

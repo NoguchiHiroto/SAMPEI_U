@@ -6,8 +6,7 @@ export const UserSchema = z.object({
   groupId: z.number().positive()
 });
 
-export const UserResponseSchema = UserSchema.extend(
-  {
+export const UserResponseSchema = z.object({
   id: z.number(),
   name: z.string(),
   email: z.string(),

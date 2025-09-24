@@ -1,13 +1,15 @@
+import { comments } from '@/features/comments/schema/comment';
+import { commentSchema } from '@/types/comment';
 import { createClient } from '@supabase/supabase-js';
 import { desc, eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import { Hono } from 'hono';
 import postgres from 'postgres';
-import { commentSchema } from '../../../types/comment';
-import { comments } from '../schema/comment';
 
 const app = new Hono();
 
+
+/** supabase関連の認証の設定 */
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY!;
 const databaseUrl = process.env.DATABASE_URL!;
@@ -21,14 +23,9 @@ app.post('/comments', async (c) => {
     const body = await c.req.json();
     const validatedData = commentSchema.parse(body);
 
-    const insertData = {
-      ...validatedData,
-      temperature: validatedData.temperature?.toString(),
-    };
-
     const [newComment] = await db
       .insert(comments)
-      .values(insertData)
+      .values(validatedData)
       .returning();
 
     return c.json({ success: true, data: newComment }, 201);
