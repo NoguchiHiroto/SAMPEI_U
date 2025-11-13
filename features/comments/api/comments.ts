@@ -58,7 +58,7 @@ app.get('/comments/group/:groupId', async (c) => {
 app.get('/comments/user/:userId/latest', async (c) => {
   try {
     const userId = parseInt(c.req.param('userId'));
-    
+
     const [latestComment] = await db
       .select()
       .from(comments)
@@ -70,6 +70,23 @@ app.get('/comments/user/:userId/latest', async (c) => {
   } catch (error) {
     console.error('Error fetching latest comment:', error);
     return c.json({ success: false, error: 'Failed to fetch latest comment' }, 500);
+  }
+});
+
+app.get('/comments/user/:userId', async (c) => {
+  try {
+    const userId = parseInt(c.req.param('userId'));
+
+    const userComments = await db
+      .select()
+      .from(comments)
+      .where(eq(comments.userId, userId))
+      .orderBy(desc(comments.createdAt));
+
+    return c.json({ success: true, data: userComments });
+  } catch (error) {
+    console.error('Error fetching user comments:', error);
+    return c.json({ success: false, error: 'Failed to fetch user comments' }, 500);
   }
 });
 

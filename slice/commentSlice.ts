@@ -3,6 +3,7 @@ import { CommentInput, CommentResponse } from '../types/comment';
 
 interface CommentState {
   comments: CommentResponse[];
+  userComments: CommentResponse[];
   latestComments: { [userId: number]: CommentResponse };
   loading: boolean;
   error: string | null;
@@ -11,6 +12,7 @@ interface CommentState {
 
 const initialState: CommentState = {
   comments: [],
+  userComments: [],
   latestComments: {},
   loading: false,
   error: null,
@@ -55,13 +57,27 @@ export const fetchLatestUserComment = createAsyncThunk(
   'comments/fetchLatestUser',
   async (userId: number) => {
     const response = await fetch(`/api/comments/user/${userId}/latest`);
-    
+
     if (!response.ok) {
       throw new Error('Failed to fetch latest comment');
     }
 
     const result = await response.json();
     return { userId, comment: result.data };
+  }
+);
+
+export const fetchUserComments = createAsyncThunk(
+  'comments/fetchUser',
+  async (userId: number) => {
+    const response = await fetch(`/api/comments/user/${userId}`);
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch user comments');
+    }
+
+    const result = await response.json();
+    return result.data;
   }
 );
 
@@ -107,6 +123,18 @@ const commentSlice = createSlice({
         if (comment) {
           state.latestComments[userId] = comment;
         }
+      })
+      .addCase(fetchUserComments.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchUserComments.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userComments = action.payload;
+      })
+      .addCase(fetchUserComments.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to fetch user comments';
       });
   },
 });

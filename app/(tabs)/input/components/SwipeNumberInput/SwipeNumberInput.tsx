@@ -1,16 +1,11 @@
 import React from "react"
-import { FlatList, NativeScrollEvent, StyleSheet, Text, View } from "react-native"
-import { number } from "zod";
+import { FlatList, StyleSheet, Text, View } from "react-native"
 
 interface CenteredNumberPickerProps {
   onTemperatureChange: (temperature: number) => void;
 }
 export const CenteredNumberPicker = ({ onTemperatureChange }: CenteredNumberPickerProps) => {
   const [selectedTemperature, setSelectedTemperature] = React.useState<number>(36.0);
-  const handleOnScrollEnd = (event: NativeScrollEvent) => {
-    const offsetX = event.contentOffset.x;
-    const centerabsolutePosition = offsetX + (containerwidth / 2)
-  }
   return (
     <View style={styles.numberPickerContainer}>
       <Text style={styles.label}>本日の体温/℃</Text>
